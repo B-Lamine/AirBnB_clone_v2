@@ -12,6 +12,40 @@ from models.amenity import Amenity
 from models.review import Review
 
 
+def check_str(value):
+    """Check string values if starting and ending with double quotes,
+    with the latter escaped if used inside and each underscore
+    replaced by a space.
+    """
+    if not (value.startswith('"') and value.endswith('"')):
+        return False
+    value = value[1:-1]
+    for i in [i for i, char in enumerate(value) if char == '"']:
+        if value[i - 1] != '\\':
+            return False
+    tmp_value = ''
+    for i, char in enumerate(value):
+        if char == '_':
+            tmp_value += ' '
+        else:
+            tmp_value += char
+    return tmp_value
+
+
+def check_value(string):
+    """Check if value is either string, or a number(float or integer),
+    and if each one is acceptable.
+    """
+    if type(eval(value)) not in [str, float, int]:
+        return False
+    if type(eval(value)) is str:
+        return check_str(value)
+    if type(eval(value)) is float:
+        return eval(value)
+    if type(eval(value)) is int:
+        return eval(value)
+
+
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
 
@@ -73,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] is '{' and pline[-1] is '}' \
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -121,7 +155,20 @@ class HBNBCommand(cmd.Cmd):
         elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        args = args.split()
+        args, *kwargs_tmp = args
+        kwargs = {}
+        for el in kwargs_tmp:
+            if ('=' not in el) or (el.startswith('=')) or (el.endswith('=')):
+                continue
+            key, value = el.split('=')
+            value = check_value(value)
+            if not value:
+                continue
+            kwargs.update({key: value})
+        # kwargs needs to be unpacked (i.e **kwargs in fct call),
+        # or else it would pass as a single argument: a dict
+        new_instance = HBNBCommand.classes[args](**kwargs)
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -319,6 +366,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
