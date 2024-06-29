@@ -1,0 +1,1 @@
+From task 6 and 10, there needs to be getter attributed to handle the case of filestorage. This needs to be implemented and tested.
