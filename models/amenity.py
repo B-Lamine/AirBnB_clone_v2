@@ -15,6 +15,6 @@ class Amenity(BaseModel, Base):
                                    viewonly=False, secondary=place_amenity)
 
 
-Amenity.places = relationship('Place', order_by=Place.id,
-                              back_populates='amenities',
-                              viewonly=False, secondary=place_amenity)
+#Amenity.places = relationship('Place', order_by=Place.id,
+#                              back_populates='amenities',
+#                              viewonly=False, secondary=place_amenity)

@@ -31,11 +31,11 @@ class Place(BaseModel, Base):
     amenity_ids = []
     city = relationship('City', back_populates='places')
     user = relationship('User', back_populates='places')
-    amenities = relationship('Amenity', back_populates='places',
+    amenities = relationship('Amenity', back_populates='place_amenities',
                              viewonly=False, secondary=place_amenity)
 
 
 Place.reviews = relationship('Review', order_by=Review.id,
                              back_populates='place')
-Place.amenities = relationship('Amenity', back_populates='place_amenities',
-                               viewonly=False, secondary=place_amenity)
+#Place.amenities = relationship('Amenity', back_populates='place_amenities',
+#                               viewonly=False, secondary=place_amenity)
