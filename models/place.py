@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
+from models.review import Review
 from sqlalchemy import Column, String, Integer, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -21,3 +22,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
     city = relationship('City', back_populates='places')
     user = relationship('User', back_populates='places')
+
+
+Place.reviews = relationship('Review', order_by=Review.id,
+                             back_populates='place')
