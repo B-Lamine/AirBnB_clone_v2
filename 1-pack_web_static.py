@@ -15,7 +15,7 @@ def do_pack():
     local("mkdir -p versions")
     with lcd("./versions"):
         test = local("tar -cvzf {} ../web_static".format(filename),
-                      capture=True)
+                     capture=True)
         if test.return_code == 0:
             return "/versions/" + filename
         else:
