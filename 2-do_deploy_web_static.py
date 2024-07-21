@@ -57,3 +57,4 @@ def do_deploy(archive_path):
                          "/data/web_static/current".format(foldername))
     if create_symlink.failed is True:
         return False
+    return True
