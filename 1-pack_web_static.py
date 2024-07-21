@@ -13,10 +13,10 @@ def do_pack():
     update_date = datetime.datetime.now()
     filename = "web_static_{}.tgz".format(update_date.strftime("%Y%m%d%H%M%S"))
     local("mkdir -p versions")
-    with lcd("./versions"):
-        test = local("tar -cvzf {} ../web_static".format(filename),
-                     capture=True)
-        if test.return_code == 0:
-            return "/versions/" + filename
+    with lcd("versions"):
+        test = local("tar -cvzf {} ../web_static".format(filename))
+        if test.succeeded is True:
+            filepath = local("realpath {}".format(filename), capture=True)
+            return filepath
         else:
             return None
