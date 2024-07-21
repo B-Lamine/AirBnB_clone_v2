@@ -39,21 +39,21 @@ def do_deploy(archive_path):
     filename = archive_path.split("/")[-1]
     foldername = filename.split('.')[0]
     make_folder = run("mkdir -p /data/web_static/releases/{}"
-                       .format(foldername))
+                      .format(foldername))
     if make_folder.failed is True:
         return False
     uncompress = run("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
-                      .format(filename, foldername))
+                     .format(filename, foldername))
     if uncompress.failed is True:
         return False
     run("mv /data/web_static/releases/{}/web_static/* "
-         "/data/web_static/releases/{}".format(foldername, foldername))
+        "/data/web_static/releases/{}".format(foldername, foldername))
     run("rm -rf /data/web_static/releases/{}/web_static".format(foldername))
     delete_archive = run("rm /tmp/{}".format(filename))
     if delete_archive.failed is True:
         return False
     run("rm -rf /data/web_static/current")
     create_symlink = run("ln -s /data/web_static/releases/{} "
-                          "/data/web_static/current".format(foldername))
+                         "/data/web_static/current".format(foldername))
     if create_symlink.failed is True:
         return False
