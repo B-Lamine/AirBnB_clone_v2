@@ -38,22 +38,22 @@ def do_deploy(archive_path):
         return False
     filename = archive_path.split("/")[-1]
     foldername = filename.split('.')[0]
-    make_folder = sudo("mkdir -p /data/web_static/releases/{}"
+    make_folder = run("mkdir -p /data/web_static/releases/{}"
                        .format(foldername))
     if make_folder.failed is True:
         return False
-    uncompress = sudo("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
+    uncompress = run("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
                       .format(filename, foldername))
     if uncompress.failed is True:
         return False
-    sudo("mv /data/web_static/releases/{}/web_static/* "
+    run("mv /data/web_static/releases/{}/web_static/* "
          "/data/web_static/releases/{}".format(foldername, foldername))
-    sudo("rm -rf /data/web_static/releases/{}/web_static".format(foldername))
-    delete_archive = sudo("rm /tmp/{}".format(filename))
+    run("rm -rf /data/web_static/releases/{}/web_static".format(foldername))
+    delete_archive = run("rm /tmp/{}".format(filename))
     if delete_archive.failed is True:
         return False
-    sudo("rm -rf /data/web_static/current")
-    create_symlink = sudo("ln -s /data/web_static/releases/{} "
+    run("rm -rf /data/web_static/current")
+    create_symlink = run("ln -s /data/web_static/releases/{} "
                           "/data/web_static/current".format(foldername))
     if create_symlink.failed is True:
         return False
