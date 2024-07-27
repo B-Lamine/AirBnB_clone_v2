@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-# Minimalist Flask web app
+""" Minimalist Flask web app
+"""
+
+
 from flask import Flask
 
 

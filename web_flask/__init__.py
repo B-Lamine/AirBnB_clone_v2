@@ -1,1 +1,2 @@
-# Flask app initilization
+"""Flask app initilization
+"""
