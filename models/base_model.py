@@ -9,7 +9,7 @@ from sqlalchemy import Column, String, Integer, DateTime
 if hbnb_type_storage == 'db':
     Base = declarative_base()
 else:
-    Base = None
+    Base = object
 
 
 class BaseModel:

@@ -15,6 +15,7 @@ class State(BaseModel, Base):
         cities = relationship('City', order_by=City.id, back_populates='state')
     else:
         name = ""
+
         @property
         def cities(self):
             """ Get list of cities in given state.
