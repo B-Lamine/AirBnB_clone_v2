@@ -129,6 +129,7 @@ if state_1 is not None:
     if len(city_ids_to_search) > 0:
         print("FAIL: {} missing".format(city_ids_to_search))
 else:
+    print(state_1)
     print("FAIL: State 1 not found")
   
 
