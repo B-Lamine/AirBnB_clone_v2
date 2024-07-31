@@ -6,8 +6,10 @@ from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, DateTime
 
-
-Base = declarative_base()
+if hbnb_type_storage == 'db':
+    Base = declarative_base()
+else:
+    Base = None
 
 
 class BaseModel:
