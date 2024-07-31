@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+from models import hbnb_type_storage
 from models.base_model import BaseModel, Base
 from models.review import Review
 from sqlalchemy import Table, Column, String, Integer

@@ -9,7 +9,7 @@ class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
-    
+
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is not None:
@@ -24,9 +24,15 @@ class FileStorage:
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        # key = obj.__class__.__name__ + '.' + obj.id
+        # FileStorage.__objects[key] = obj.to_dict()
 
     def save(self):
         """Saves storage dictionary to file"""
+        # print(FileStorage.__objects)
+        # json_str = json.dumps(type(self).__objects)
+        # with open(type(self).__file_path, 'w', encoding='utf-8') as f:
+        #     f.write(json_str)
         with open(FileStorage.__file_path, 'w') as f:
             temp = {}
             temp.update(FileStorage.__objects)
@@ -57,6 +63,11 @@ class FileStorage:
                     self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
+
+    def close(self):
+        """ Prompt deserialization of the JSON file to objects.
+        """
+        self.reload()
 
     def delete(self, obj=None):
         """ Delete object from storage.
