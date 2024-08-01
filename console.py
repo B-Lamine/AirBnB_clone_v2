@@ -149,41 +149,28 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        #################################
+        args = args.split()
+        args, *kwargs_tmp = args
         if not args:
             print("** class name missing **")
             return
         elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        kwargs = {}
+        for el in kwargs_tmp:
+            if ('=' not in el) or (el.startswith('=')) or (el.endswith('=')):
+                continue
+            key, value = el.split('=')
+            value = check_value(value)
+            if not value:
+                continue
+            kwargs.update({key: value})
+        # kwargs needs to be unpacked (i.e **kwargs in fct call),
+        # or else it would pass as a single argument: a dict
+        new_instance = HBNBCommand.classes[args](**kwargs)
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
-        #################################
-
-       # args = args.split()
-       # args, *kwargs_tmp = args
-       # if not args:
-       #     print("** class name missing **")
-       #     return
-       # elif args not in HBNBCommand.classes:
-       #     print("** class doesn't exist **")
-       #     return
-       # kwargs = {}
-       # for el in kwargs_tmp:
-       #     if ('=' not in el) or (el.startswith('=')) or (el.endswith('=')):
-       #         continue
-       #     key, value = el.split('=')
-       #     value = check_value(value)
-       #     if not value:
-       #         continue
-       #     kwargs.update({key: value})
-       # # kwargs needs to be unpacked (i.e **kwargs in fct call),
-       # # or else it would pass as a single argument: a dict
-       # new_instance = HBNBCommand.classes[args](**kwargs)
-       # new_instance.save()
-       # print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
