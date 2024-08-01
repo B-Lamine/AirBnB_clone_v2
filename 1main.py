@@ -72,7 +72,6 @@ def exec_command(my_console, the_command, last_lines = 1):
  Objects creations
 """
 state_id_1 = exec_command(my_console, "create State name=\"California\"")
-print(state_id_1)
 if state_id_1 is None or state_id_1 == "":
     print("FAIL: Can't create State 1")
     

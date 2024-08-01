@@ -28,3 +28,7 @@ class State(BaseModel, Base):
                 if v.state_id == current_stateId:
                     cities_list.append(v)
             return cities_list
+    
+    def __init__(self, *args, **kwargs):
+        """ Instantiation"""
+        super().__init__(*args, **kwargs)

@@ -17,3 +17,8 @@ class Amenity(BaseModel, Base):
                                        viewonly=False, secondary=place_amenity)
     else:
         name = ""
+
+    def __init__(self, *args, **kwargs):
+        """ Instantiation"""
+        super().__init__(*args, **kwargs)
+
